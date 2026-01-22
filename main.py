@@ -74,9 +74,10 @@ def convert_time(ref_tz: str, hour: int, minute: int, target_tz: str) -> tuple[i
 
 @app.get("/")
 async def index():
-    # Default to Washington DC, current time
+    # Default to Washington DC, current time, today's date
     default_tz = "America/New_York"
     hour, minute = get_current_time_in_tz(default_tz)
+    today_str = datetime.now(ZoneInfo(default_tz)).strftime("%Y-%m-%d")
 
     # Convert to 12-hour format
     am_pm = "AM" if hour < 12 else "PM"
@@ -106,6 +107,13 @@ async def index():
                         id="time_input",
                         value=f"{hour:02d}:{minute:02d}",
                     ),
+                    air.Label("Date", _for="date_input"),
+                    air.Input(
+                        type="date",
+                        name="date_input",
+                        id="date_input",
+                        value=today_str,
+                    ),
                 ),
                 hx_get="/convert",
                 hx_trigger="load, change",
@@ -122,8 +130,16 @@ async def index():
 
 
 @app.get("/convert")
-async def convert(ref_tz: str = "America/New_York", time_input: str = "12:00"):
+async def convert(ref_tz: str = "America/New_York", time_input: str = "12:00", date_input: str = ""):
     """Convert time to all timezones and return cards."""
+    # Parse the date input (YYYY-MM-DD format from HTML date input)
+    if date_input:
+        try:
+            selected_date = datetime.strptime(date_input, "%Y-%m-%d").date()
+        except ValueError:
+            selected_date = datetime.now(ZoneInfo(ref_tz)).date()
+    else:
+        selected_date = datetime.now(ZoneInfo(ref_tz)).date()
     # Parse the time input (HH:MM format from HTML time input)
     try:
         hour, minute = map(int, time_input.split(":"))
