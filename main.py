@@ -46,16 +46,17 @@ def format_time_12h(hour: int, minute: int) -> str:
     return f"{display_hour}:{minute:02d} {am_pm}"
 
 
-def convert_time(ref_tz: str, hour: int, minute: int, target_tz: str) -> tuple[int, int, str]:
+def convert_time(ref_tz: str, hour: int, minute: int, target_tz: str, selected_date=None) -> tuple[int, int, str]:
     """Convert time from reference timezone to target timezone.
     Returns (hour, minute, day_indicator).
     """
-    # Create a datetime in the reference timezone for today
+    # Create a datetime in the reference timezone for the selected date
     ref_zone = ZoneInfo(ref_tz)
     target_zone = ZoneInfo(target_tz)
 
-    today = datetime.now(ref_zone).date()
-    ref_dt = datetime(today.year, today.month, today.day, hour, minute, tzinfo=ref_zone)
+    if selected_date is None:
+        selected_date = datetime.now(ref_zone).date()
+    ref_dt = datetime(selected_date.year, selected_date.month, selected_date.day, hour, minute, tzinfo=ref_zone)
 
     # Convert to target timezone
     target_dt = ref_dt.astimezone(target_zone)
@@ -148,7 +149,7 @@ async def convert(ref_tz: str = "America/New_York", time_input: str = "12:00", d
 
     cards = []
     for name, tz in TIMEZONES:
-        target_hour, target_minute, day_ind = convert_time(ref_tz, hour, minute, tz)
+        target_hour, target_minute, day_ind = convert_time(ref_tz, hour, minute, tz, selected_date)
         color = get_color_for_hour(target_hour)
         time_str = format_time_12h(target_hour, target_minute)
 
