@@ -61,14 +61,14 @@ def convert_time(ref_tz: str, hour: int, minute: int, target_tz: str, selected_d
     # Convert to target timezone
     target_dt = ref_dt.astimezone(target_zone)
 
-    # Determine day indicator
+    # Determine day indicator (relative to selected date)
     target_date = target_dt.date()
-    if target_date == today:
-        day_indicator = "today"
-    elif target_date > today:
-        day_indicator = "tomorrow"
+    if target_date == selected_date:
+        day_indicator = "same day"
+    elif target_date > selected_date:
+        day_indicator = "next day"
     else:
-        day_indicator = "yesterday"
+        day_indicator = "previous day"
 
     return target_dt.hour, target_dt.minute, day_indicator
 
