@@ -38,6 +38,11 @@
 4. **Instant Updates**
    - Time or timezone changes update all cards without full page reload
 
+5. **Date Selection**
+   - Date picker to select any date (default: today)
+   - Time conversions use selected date for accurate DST calculations
+   - Day indicators show relative to selected date (same day/next day/previous day)
+
 ### Technology Choices
 
 **Language & Framework:**
@@ -54,7 +59,6 @@
 
 ### Out of Scope (MVP)
 - User accounts / authentication
-- Date selection (always assumes "today")
 - Session persistence
 - Custom timezone lists
 - Calendar integration
@@ -71,7 +75,7 @@
 
 ## Implementation Status
 
-*Last updated: 2025-01-21*
+*Last updated: 2026-01-22*
 
 ### Core Features
 
@@ -82,7 +86,8 @@
 | Pre-fill current time | ✅ Complete | Loads current time in reference timezone |
 | 12 timezone cards | ✅ Complete | All regions covered |
 | Converted time display (AM/PM) | ✅ Complete | `format_time_12h()` in main.py |
-| Day indicator | ✅ Complete | Shows today/tomorrow/yesterday |
+| Day indicator | ✅ Complete | Shows same day/next day/previous day relative to selected date |
+| Date picker | ✅ Complete | HTML5 date input, defaults to today |
 | Color-coded suitability | ✅ Complete | Green/yellow/red based on local hour |
 | HTMX instant updates | ✅ Complete | Triggers on input change |
 | Responsive grid layout | ✅ Complete | CSS grid with auto-fill |
