@@ -10,7 +10,7 @@
 - [x] Modify `convert_time()` function to use selected date instead of `datetime.now().date()`
 - [x] Fix day indicator logic to compare against selected date, not today
 - [x] Update SPEC.md — move "Date selection" from Out of Scope to Core Features, update Implementation Status
-- [ ] Update README.md — add date picker to features list
+- [x] Update README.md — add date picker to features list
 
 ### Human Developer Tasks
 - [ ] Test: Select tomorrow's date → verify day indicators still make sense

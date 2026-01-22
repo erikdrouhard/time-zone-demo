@@ -6,11 +6,12 @@ A single-page web app for comparing meeting times across global time zones. Ente
 
 - Select your reference timezone from 12 major cities
 - Enter a meeting time and see it converted across all zones
+- Pick any date for planning future or past meetings (defaults to today)
 - Color-coded cards indicate meeting suitability:
   - **Green** — Ideal business hours (9 AM – 4 PM)
   - **Yellow** — Inconvenient but possible (6–9 AM, 4–10 PM)
   - **Red** — Unacceptable (10 PM – 6 AM)
-- Day indicators show "today", "tomorrow", or "yesterday" for times crossing midnight
+- Day indicators show relative day changes when times cross midnight
 - Instant updates via HTMX — no page reload required
 
 ## Cities Covered
